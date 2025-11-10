@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Futurebyte News</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Futurebyte News</h1>
+    <p class="tagline">Real-time tech headlines — powered by RSS & GitHub Actions</p>
+  </header>
+
+  <main class="container">
+    <section id="feed"></section>
+  </main>
+
+  <footer class="site-footer">© Futurebyte News — aggregated tech headlines</footer>
+
+  <script>
+  async function loadArticles(){
+    try{
+      const r = await fetch('articles.json', {cache: 'no-store'});
+      if(!r.ok) throw new Error('articles.json not found');
+      const articles = await r.json();
+      const feed = document.getElementById('feed');
+      feed.innerHTML = '';
+      for(const a of articles){
+        const card = document.createElement('article');
+        card.className = 'card';
+        let imgHtml = '';
+        if(a.image_local) imgHtml = `<div class="thumb"><img src="${a.image_local}" alt=""></div>`;
+        else if(a.image) imgHtml = `<div class="thumb"><img src="${a.image}" alt=""></div>`;
+        card.innerHTML = `
+          ${imgHtml}
+          <div class="content">
+            <h3><a href="${a.link}" target="_blank" rel="noopener">${a.title}</a></h3>
+            <p class="meta">${a.source} • ${a.date}</p>
+            <p class="summary">${a.summary}</p>
+          </div>
+        `;
+        feed.appendChild(card);
+      }
+    }catch(e){
+      document.getElementById('feed').innerHTML = '<p class="card">Could not load articles. Make sure the site is published and articles.json is present.</p>';
+      console.warn(e);
+    }
+  }
+  loadArticles();
+  </script>
+</body>
+</html>

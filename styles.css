@@ -1,0 +1,15 @@
+:root{--accent:#0b57d0;--muted:#666}
+*{box-sizing:border-box}
+body{font-family:system-ui,Segoe UI,Roboto,Arial; margin:0;background:#f4f6f8;color:#111}
+.site-header{background:linear-gradient(90deg,var(--accent),#2b8be6);color:#fff;padding:22px 16px}
+.site-header h1{margin:0;font-size:24px}
+.tagline{margin-top:6px;opacity:0.95}
+.container{max-width:1100px;margin:20px auto;padding:0 16px}
+.card{display:flex;gap:12px;background:#fff;padding:12px;border-radius:8px;box-shadow:0 1px 3px rgba(10,10,20,0.06);margin-bottom:12px;align-items:flex-start}
+.thumb img{width:180px;height:110px;object-fit:cover;border-radius:6px}
+.content h3{margin:0 0 6px 0;font-size:18px}
+.content h3 a{color:#0b57d0;text-decoration:none}
+.meta{color:var(--muted);font-size:13px;margin-bottom:8px}
+.summary{margin:0}
+.site-footer{text-align:center;color:var(--muted);padding:18px;margin-top:20px}
+@media (max-width:720px){.card{flex-direction:column}.thumb img{width:100%;height:180px}}
