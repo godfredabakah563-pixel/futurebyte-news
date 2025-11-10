@@ -1,9 +1,9 @@
-herename: Update articles and deploy to Pages
+name: Update articles and deploy to Pages
 
 on:
   schedule:
-    - cron: "*/30 * * * *"   # every 30 minutes
-  workflow_dispatch:         # manual trigger
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -18,27 +18,19 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install dependencies
-        run: pip install feedparser requests beautifulsoup4
-
       - name: Run update script
         run: python update_fetcher.py
 
-      - name: Upload built site
-        uses: actions/upload-pages-artifact@v2
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v1
         with:
           path: public
 
   deploy:
     needs: build
-    permissions:
-      pages: write
-      id-token: write
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v1
